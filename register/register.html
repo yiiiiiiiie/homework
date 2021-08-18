@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+   
+    <title>Document</title>
+    <style>
+       #zhucediv{ 
+           text-align: center
+       }
+     #bigdiv div{
+       margin: auto;
+       text-align: center;
+     }
+     .div1{
+        line-height: 20px;
+    }
+   </style>
+   <script type="text/javascript">
+   function checkuname(){
+       var uname=document.getElementById("uname").value;
+       var unamereg=/^[a-z0-9A-Z_-]{4,16}$/
+       var unamespan=document.getElementById("unamespan");
+       if(unamespan=="||unamespan"==null){
+           unamespan.innerHTML="*用户名不能为空";
+           unamespan.style.color="red";
+           return false;
+       }else if(unamereg.test(uname)){
+           unamespan.innerHTML="*用户名合法";
+           unamespan.style.color="green";
+           return true;
+       }else{
+           unamespan.innerHTML="*用户名不合法";
+           unamespan.style.color="red";
+           return false;
+       }   
+   }
+
+  function checkpsd1(){
+      var span=document.getElementById("psd1span");
+      var psd1reg=/^1[0-5]{2}[6-9]{3}[a-dA-D]{2}$/
+            if(span==""||span==null){
+          span.innerHTML="*密码不能为空";
+          span.style.color="red";
+          return false;
+      }else if(psd1reg.test(psd1)){
+          span.innerHTML="*密码合法";
+          span.style.color="green";
+          return true;
+         
+      }else{
+          span.innerHTML="*密码不合法";
+          span.style.color="red";
+          return false;
+      }
+  }
+
+   function checkpsd2(){
+       var psd1=document.getElementById("psd1").value;
+       var psd2=document.getElementById("psd2").value;
+       var span=document.getElementById("psd2span");
+       if(psd2==""||psd2==null){
+           span.innerHTML="*密码不能为空";
+           span.style.color="red";
+           return fslse;  
+       }else if(psd1==psd2){
+           span.innerHTML="*密码一致";
+           span.style.solor="green";
+           return true;
+       }else{
+           span.innerHTML="*密码不合法或不一致";
+           span.style.color="red";
+           return false;
+       }
+    }
+
+    function checkphone(){
+        var phone=document.getAnimations("phone").value;
+        var phonereg=/^1[3-9][0-9]{9}$/;
+        var span=document.getElementById("phonespan");
+        if(phone==""||phone==null){
+            span.innerHTML="*手机号不能为空";
+            span.style.color="red";
+            return false;
+        }else if(phonereg.test(phone)){
+            span.innerHTML="*手机号合法";
+            span.style.color="green";
+            return true;
+        }else{
+            span.innerHTML="*手机号不合法";
+            span.style.color="red";
+            return false;
+        }
+    }
+
+    function check(){
+        checkuname();
+        checkpsd1();
+        checkpsd2();
+        checkphone();
+    }
+   </script>
+</head>
+<body> 
+    <div id="zhucediv">
+        <h3>注册页面</h3>
+    </div>
+    <hr>
+    <div id="bigdiv">
+        <div class="div1" ><br>
+            <br>
+            用户名：
+            <br>
+            <input type="text "  name="uname"  id="uname" value=""/>
+            <br>
+            <span id="unamespan"></span>
+        </div>
+        <div  class="div1" ><br>
+            密码：<br>
+            <input type="password" id="psd1" name="psd1" value=""/>
+            <br>
+            <span id="psd1span"></span>
+        </div>
+    <div class="div1" ><br>
+        确认密码：<br>
+        <input type="password" id="psd2" name="psd2" value=""/>
+        <br>
+        <span  id="psd2span"></span>
+    </div>
+    <div  class="div1"><br>
+        手机号：<br>
+        <input type="text " id="phone" name="phone" value=""/>
+        <br>
+        <span id="phonespan"></span>
+    </div >
+    <div class="div1"><br>
+        <input type="submit" id="sub" value="注册" onclick="check()"/>
+    </div>
+</div>
+</body>
+</html>
