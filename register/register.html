@@ -59,20 +59,25 @@
        var psd1=document.getElementById("psd1").value;
        var psd2=document.getElementById("psd2").value;
        var span=document.getElementById("psd2span");
+       var psd2reg=/^1[0-5]{2}[6-9]{3}[a-dA-D]{2}$/
+
        if(psd2==""||psd2==null){
            span.innerHTML="*密码不能为空";
            span.style.color="red";
-           return fslse;  
-       }else if(psd1==psd2){
+           return fslse;
+
+       }else if (psd1==psd2&&psd2reg.test(psd2)){
            span.innerHTML="*密码一致";
-           span.style.solor="green";
+           span.style.color="green";
            return true;
-       }else{
+        
+      }else {
            span.innerHTML="*密码不合法或不一致";
            span.style.color="red";
            return false;
-       }
+      }
     }
+
 
     function checkphone(){
         var phone=document.getAnimations("phone").value;
