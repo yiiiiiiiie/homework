@@ -21,7 +21,7 @@
        var uname=document.getElementById("uname").value;
        var unamereg=/^[a-z0-9A-Z_-]{4,16}$/
        var unamespan=document.getElementById("unamespan");
-       if(unamespan=="||unamespan"==null){
+       if(uname=="||uname"==null){
            unamespan.innerHTML="*用户名不能为空";
            unamespan.style.color="red";
            return false;
@@ -39,7 +39,7 @@
   function checkpsd1(){
       var span=document.getElementById("psd1span");
       var psd1reg=/^1[0-5]{2}[6-9]{3}[a-dA-D]{2}$/
-            if(span==""||span==null){
+            if(psd1==""||psd1==null){
           span.innerHTML="*密码不能为空";
           span.style.color="red";
           return false;

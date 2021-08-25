@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #title{
+            border: 6px solid #2F3D4A;
+            height: 20px;
+            width: 150px;
+            margin:auto;
+            font-size: 25px;
+            color: white;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        #a1{
+            width: 450px;
+            height: 700px;
+            background-color: #2F3D4A;
+            border-radius: 50px;
+            margin: 60px auto;
+        }
+
+        #iptBtn{
+            margin: 0 70px 40px 70px;
+            font-size: 0;
+        }
+
+     #ipt{
+        padding-left: 20px;
+         font-size: 18px;
+         margin-top: 100px;
+         width: 250px;
+         height: 35px;
+         outline: 0;
+         border: none;
+         vertical-align: top;
+         border-bottom-left-radius: 25px;
+         border-top-left-radius:25px;
+     }    
+    
+     #btn{
+         font-size: 18px;
+         color: white;
+         margin-top: 100px;
+         height: 35px;
+         width: 50px;
+          border: none;
+         outline: none;
+         background: #F38C78;
+         border-bottom-right-radius:25px;
+         border-top-right-radius: 25px;
+     }
+     
+     .list{
+         width: 265px;
+         height: 20px;
+         color: white;
+         border-radius: 20px;
+         font-size: 20px;
+         margin: 15px 70px 0 70px;
+         padding: 10px 20px 10px 20px;
+        background-color: #283140;
+        list-style-type: none;
+
+     }
+
+     #btn2{
+         height: 40px;
+         width: 110px;
+         font-size: 18px;
+         position: fixed;
+         top: 650px;
+         left: 660px;
+         color: white;
+         background-color: #F38C78;
+         border-radius: 18px;
+       
+     }
+     .scbtn{
+         width: 20px;
+         height: 20px;
+         border-radius: 50%;
+         background-color:#283140 ;
+         border: #F38C78 4px solid;
+         float: right;
+     }
+     
+     </style>
+</head>
+<body bgcolor="#F38C78">
+    <div id="a1">
+
+        <div id="title">
+            <h1 >Todos</h1>
+        </div>
+
+        <div id="iptBtn">
+            <input type="search" id="ipt" placeholder="(ง•̀o•́)ง元气满满！">
+            <button id="btn" onclick="create()">add</button>
+        </div>
+
+        <div id="lidiv"></div>
+
+      
+            <button id="btn2" onclick="delAll()">Delete All</button>
+        
+
+    </div>
+    <script>
+        var lidiv = document.getElementById("lidiv");
+        query();
+        function query() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET','http://47.113.187.45:8989/todo/index/selectAll');
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState ===4 ) {
+                    if(xhr.status >= 200 && xhr.status < 300) {
+                        console.log(xhr.response);
+                        var data = JSON.parse(xhr.response);
+                        var sum = "";
+                        for(var i = 0; i < data.content.length; i++){
+                            var cct = data.content[i].Content;
+                            var cid = data.content[i].Id;
+                            sum = sum + "<li class='list'>"  + cct + "<button class='scbtn' onclick='del(\"" + cid + " \")'></button></li>";
+                        }
+                        lidiv.innerHTML = sum;
+                    }
+                }
+            }
+        }
+
+        function create() {
+            var ipt = document.getElementById("ipt");
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','http://47.113.187.45:8989/todo/index/create');
+            xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded');
+            xhr.send("msg=" + ipt.value);
+            xhr.onreadystatechange = function () {
+                if(xhr.readyState === 4) {
+                    if(xhr.status >= 200 && xhr.status <300) {
+                        console.log(xhr.response);
+                        query();
+                    }
+                }
+            }
+        }
+
+        function del(cid) {
+            var url = "http://47.113.187.45:8989/todo/index/delete/" + cid;
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE',url);
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState ===4) {
+                    if(xhr.status >= 200 && xhr.status <300) {
+                        console.log(xhr.response);
+                        query();
+                    }
+                }
+            }
+        }
+        
+        function delAll() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('DELETE','http://47.113.187.45:8989/todo/index/deleteAll');
+            xhr.send();
+            xhr.onreadystatechange = function() {
+                if(xhr.readyState === 4) {
+                    if(xhr.status >= 200 && xhr.status <300) {
+                        console.log(xhr.response);
+                        query();
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+</html>
