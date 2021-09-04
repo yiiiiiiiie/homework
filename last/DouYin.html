@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抖音-记录美好生活</title>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            font-size: 14px;
+            font-family: "微软雅黑";
+        }
+
+        header {
+            width: 90%;
+            height: 100px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        header div {
+            float: left;
+        }
+
+        .title {
+            font-family: "华文行楷";
+            font-weight: bold;
+            font-size: 50px;
+            text-align: left;
+            letter-spacing: 10px;
+            line-height: 0px;
+            margin-top: 0;
+            margin-left: 38%;
+            color: black;
+        }
+
+        a:hover {
+            color: #F00;
+        }
+
+        article {
+            width: 1200px;
+            margin: auto;
+            display: block;
+            overflow: hidden;
+        }
+
+        #ulDiv {
+            padding-left: 70px;
+        }
+
+        .liDiv {
+            margin-top: 20px;
+            margin-right: 30px;
+            float: left;
+        }
+
+        .alnDiv {
+            height: 220px;
+            /* 400px */
+            width: 180px;
+            background: #FFFFFF;
+            border: 3px solid #E6E9EF;
+            border-radius: 10px;
+        }
+
+        .mainDiv {
+            height: 54%;
+            width: auto;
+            margin-bottom: 1%;
+            position: relative;
+        }
+
+        .durationDiv {
+            position: absolute;
+            color: azure;
+            background: #7B7B7B;
+            z-index: 2;
+            right: 0;
+            bottom: 0;
+            border-radius: 4px;
+        }
+
+        .viceDiv {
+            height: 50%;
+            width: auto;
+        }
+
+        .mainDiv img {
+            height: 100%;
+            width: 100%;
+        }
+
+        .spanDiv {
+            height: 40%;
+            width: auto;
+            background: #FFFFFF;
+            overflow: hidden;
+        }
+
+        .simgDiv {
+            height: 15%;
+            background: #FFFFFF;
+            margin-bottom: 3px;
+            color: #99A2B2;
+        }
+
+        .authorDiv {
+            height: 30%;
+            background: #FFFFFF;
+            color: #99A2B2;
+        }
+
+        .alnDiv:hover {
+            border: 3px solid #7b7c81;
+        }
+
+        .authorImg:hover {
+            border: lightpink 2px solid;
+        }
+
+        .viceDiv img {
+            vertical-align: middle;
+        }
+
+        .simgDiv img {
+            height: 80%;
+
+        }
+
+        .authorImg {
+            height: 100%;
+            border-radius: 50%;
+            position: relative;
+        }
+
+        footer {
+            width: 100%;
+            height: 60px;
+            margin-top: 10px;
+            text-align: center;
+            background: #F6F6F6;
+        }
+
+        .footer p:first child a {
+            display: inline-block;
+            width: 120px;
+            line-height: 20px;
+            text-align: center;
+            border-right: 1px solid #CCC;
+        }
+
+        .footer p:first child a:last child {
+            border-right: none;
+        }
+
+        .footer p {
+            line-height: 180px;
+            text-align: center;
+            color: #CCC;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="title">
+            <p>抖音-记录美好生活</p>
+        </div>
+    </header>
+    <hr>
+    <article>
+        <div id="ulDiv"></div>
+    </article>
+
+    <footer>
+        <p>
+            <a href="#">关于我们</a>|
+            <a href="#">联系我们</a>|
+            <a href="#">加入收藏</a>|
+            <a href="#">留言板</a>
+            <br>
+            <a href="#">帮助中心</a>
+            <a href="#">用户反馈论坛</a>
+            <a href="#">侵权申诉</a>
+        </p>
+        <p class="company">Email：dadadada.com</p>
+        <p>地址：重庆哒哒哒 &nbsp;&nbsp;&nbsp;联系方式：121121121</p>
+    </footer>
+    <script>
+        douyin();
+        function douyin() {
+            var xhr = new XMLHttpRequest();
+            var ulDiv = document.getElementById("ulDiv");
+            xhr.open('GET', "http://api.tianapi.com/txapi/dyvideohot/index?key=ec9b9dc0c78d5baa78d80d7a9e3d7e4f");
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        console.log("123");
+                        console.log(xhr.response);
+
+                        var data = JSON.parse(xhr.response);
+                        var result = "";
+                        for (var i = 0; i < data.newslist.length; i++) {
+                            var a = data.newslist[i];
+                            var hotindex = a.hotindex;
+                            var createtime = a.createtime;
+                            var duration = a.duration;
+                            var playaddr = a.playaddr;
+                            var coverurl = a.coverurl;
+                            var title = a.title;
+                            var shareurl = a.shareurl;
+                            var avatar = a.avatar;
+                            var signature = a.signature;
+                            var author = a.author;
+                            debugger
+                            duration = parseInt(duration / 1000);
+                            var second = duration % 60;
+                            duration = parseInt(duration / 60);
+                            var minute = duration % 60;
+                            duration = parseInt(duration / 60);
+                            var hour = duration % 60;
+                            var time = "";
+                            if (hour !== 0) {
+                                time = time + hour + ":" + minute + ":" + second;
+                            } else if (minute !== 0) {
+                                time = time + minute + ":" + second;
+                            } else {
+                                time = time + "00:" + second;
+                            }
+                            var date = new Date(createtime * 1000);
+                            var month = date.getMonth() + 1;
+                            var ctime = date.getFullYear() + "-" + month + "-" + date.getDate();
+                            result = result +
+                                '<div class="liDiv">\
+                <div class="alnDiv">\
+                    <div class="mainDiv">\
+                        <a class="aclass" href= "'+ shareurl + '?">\
+                            <img class="mainImg" src="'+ coverurl + '" alt="">\
+                        </a>\
+                        <div class="durationDiv"> ' + time + ' \
+                        </div>\
+                    </div>\
+                    <div class="viceDiv">\
+                        <div class="spanDiv">\
+                            <span title="' + title + '">' + title + '</span>\
+                        </div>\
+                        <div class="simgDiv">\
+                            <img src="images/bofang.png" alt="">\
+                            <span>'+ hotindex + '</span>\
+                            &nbsp&nbsp&nbsp&nbsp&nbsp<img src="images/shijian.png" alt="">\
+                            <span>'+ ctime + '</span>\
+                        </div>\
+                        <div class="authorDiv">\
+                            <img class="authorImg" src="'+ avatar + '" alt="" title="' + signature + '">\
+                            <span>'+ author + '</span>\
+                        </div>\
+                    </div>\
+                </div>\
+            </div>'
+                        }
+                        console.log(result);
+                        ulDiv.innerHTML = result;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

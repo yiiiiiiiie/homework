@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>藏头诗</title>
+    <style>
+        body {
+            height: 100%;
+            width: 100%;
+            font-size: 14px;
+            font-family: "微软雅黑";
+        }
+
+        header {
+            width: 90%;
+            height: 100px;
+            background: #C39966;
+            margin: 0 auto;
+            position: relative;
+            color: black;
+        }
+
+        header div {
+            float: left;
+        }
+
+        .title {
+            font-family: "华文行楷";
+            font-weight: bold;
+            font-size: 50px;
+            text-align: left;
+            letter-spacing: 10px;
+            line-height: 0px;
+            margin-top: 0;
+            margin-left: 38%;
+            color: black;
+        }
+
+        article {
+            width: 1200px;
+            margin: auto;
+            display: block;
+            padding: 50px 100px 50px 100px;
+        }
+
+        #cxDiv {
+            height: 100px;
+            width: 400px;
+            font-size: 0;
+            margin: 0 auto;
+            display: block;
+        }
+
+        #ipt {
+            padding-left: 20px;
+            margin-top: 20px;
+            font-size: 18px;
+            width: 250px;
+            height: 35px;
+            outline: 0;
+            border-top: #F0F0F0 2px solid;
+            border-left: #F0F0F0 2px solid;
+            border-bottom: #F0F0F0 2px solid;
+            border-right: none;
+            vertical-align: top;
+            border-bottom-left-radius: 25px;
+            border-top-left-radius: 25px;
+        }
+
+        #btn {
+            font-size: 18px;
+            margin-top: 20px;
+            color: white;
+            height: 41px;
+            width: 50px;
+            border-top: #F0F0F0 2px solid;
+            border-right: #F0F0F0 2px solid;
+            border-bottom: #F0F0F0 2px solid;
+            border-left: none;
+            outline: none;
+            border-bottom-right-radius: 25px;
+            border-top-right-radius: 25px;
+            background-color: white;
+        }
+
+        #ipt:hover+#btn {
+            font-size: 18px;
+            color: white;
+            margin-top: 20px;
+            height: 41px;
+            width: 50px;
+            border: none;
+            outline: none;
+            background-color: #C39966;
+            border-bottom-right-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+
+        #btn:hover {
+            font-size: 18px;
+            color: white;
+            margin-top: 20px;
+            height: 41px;
+            width: 50px;
+            border: none;
+            outline: none;
+            background: #C39966;
+            border-bottom-right-radius: 25px;
+            border-top-right-radius: 25px;
+        }
+
+        #backDiv {
+            width: 1200px;
+            margin: auto;
+            display: block;
+            overflow: hidden;
+        }
+
+        .listDiv {
+            width: 1200px;
+            padding: 50px 200px 20px 440px;
+            border: #c9a273 2px solid;
+        }
+
+        .wordDiv {
+            font-size: 40px;
+            font-family: "华文行楷";
+            width: 250px;
+            word-wrap: break-word;
+        }
+
+        footer {
+            width: 100%;
+            height: 60px;
+            margin-top: 10px;
+            text-align: center;
+            background: white;
+        }
+
+        .footer p:first child a {
+            display: inline-block;
+            width: 120px;
+            line-height: 20px;
+            text-align: center;
+            border-right: 1px solid #CCC;
+        }
+
+        .footer p:first child a:last child {
+            border-right: none;
+        }
+
+        .footer p {
+            line-height: 180px;
+            text-align: center;
+            color: #CCC;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="title">
+            <p>藏头诗</p>
+        </div>
+    </header>
+    <article>
+        <div id="cxDiv">
+            <input type="text" name="" id="ipt" placeholder="请输入2-8个字...">
+            <button id="btn" onclick="CTS()">查询</button>
+        </div>
+        <hr>
+        <div id="backDiv"></div>
+    </article>
+    <footer>
+        <p>
+            <a href="#">关于我们</a>|
+            <a href="#">联系我们</a>|
+            <a href="#">加入收藏</a>|
+            <a href="#">留言板</a>
+            <br>
+            <a href="#">帮助中心</a>
+            <a href="#">用户反馈论坛</a>
+            <a href="#">侵权申诉</a>
+        </p>
+        <p class="company">Email：dadadada.com</p>
+        <p>地址：重庆哒哒哒 &nbsp;&nbsp;&nbsp;联系方式：121121121</p>
+    </footer>
+    <script>
+        function CTS() {
+            var backDiv = document.getElementById("backDiv");
+            var ipt = document.getElementById("ipt");
+            if (ipt.value === null || ipt.value === "") {
+                return;
+            }
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://api.tianapi.com/txapi/cangtoushi/index?key=ec9b9dc0c78d5baa78d80d7a9e3d7e4f&word=' + ipt.value);
+            xhr.send();
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        console.log(xhr.response);
+                        var data = JSON.parse(xhr.response);
+                        var result = "";
+                        for (var i = 0; i < data.newslist.length; i++) {
+                            var list = data.newslist[i].list;
+                            result = result + "<div class='listDiv'><div class='wordDiv'>" + list + "</div></div>";
+                        }
+                        backDiv.innerHTML = result;
+                    }
+                }
+            }
+            ipt.value = null;
+        }
+    </script>
+</body>
+
+</html>
